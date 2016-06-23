@@ -1,0 +1,20 @@
+            .DATA
+NUM :       .WORD   #1, #2, #3, #4, #5, #7, #-1
+            .TEXT
+            .GLOBAL  MAIN
+MAIN :      ADDI    R1, R0, #0
+            ADDI    R2, R0, #0
+            ADDI    R3, R0, #0
+LOOP :      LW      R4, NUM(R3)
+            ADDI    R3, R3, #4
+            SEQI    R5, R4, #-1
+            BNEZ    R5, END
+            ANDI    R5, R4, #1
+            BEQZ    R5, EVEN
+ODD :       ADDI    R1, R1, #1
+            J       LOOP
+EVEN :      ADDI    R2, R2, #1
+            J       LOOP
+END :       ADD     R11, R0, R1
+            ADD     R12, R0, R2
+            TRAP    x00

@@ -1,0 +1,19 @@
+            .DATA
+            .TEXT   
+            .GLOBAL  MAIN
+MAIN :      TRAP    x09
+            JAL     HEX
+            ADDI    R1, R4, #0
+            TRAP    x09
+            JAL     HEX
+            ADD     R1, R1, R4
+            SUBI    R4, R1, #48
+            SLTI    R5, R4, #58
+            BNEZ    R5, OUT
+            ADDI    R4, R4, #39
+OUT :       TRAP    x07
+            TRAP    x00
+HEX :       SLTI    R5, R4, #58
+            BNEZ    R5, NONHEX
+            SUBI    R4, R4, #39
+NONHEX :    JR      R31

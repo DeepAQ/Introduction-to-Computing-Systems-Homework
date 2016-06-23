@@ -1,0 +1,9 @@
+            .DATA
+            .TEXT   x40000000
+            .GLOBAL  MAIN
+MAIN :      ADDI    R1, R0, #12
+            SRAI    R3, R1, #1
+            SLLI    R3, R3, #1
+            SEQ     R2, R1, R3
+		;SEQ     R5, R1, R3
+            TRAP    x00

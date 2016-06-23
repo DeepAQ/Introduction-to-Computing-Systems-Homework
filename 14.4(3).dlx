@@ -1,0 +1,46 @@
+            .DATA
+PROMPT :    .ASCIIZ "Input a string> "
+STR :       .ASCIIZ "x0A"
+            .TEXT   
+            .GLOBAL  MAIN
+MAIN :      ADDI    R4, R0, STR
+            ADDI    R5, R0, #10
+            JAL     TRAPX0A
+            ADDI    R4, R0, STR
+            ADDI    R2, R0, #0
+            LB      R3, 0(R4)
+            SEQI    R5, R3, #120
+            ADDI    R1, R0, #1
+            BEQZ    R5, LOOP
+            ADDI    R1, R0, #4
+            ADDI    R4, R4, #1
+LOOP :      LB      R3, 0(R4)
+            BEQZ    R3, END
+            SLL     R2, R2, R1
+            BEQZ    R5, NONHEX
+            SLTI    R6, R3, #58
+            BNEZ    R6, NEXT
+            SUBI    R3, R3, #7
+            J       NEXT
+NONHEX :    ADDI    R6, R2, #0
+            SLLI    R2, R2, #2
+            ADD     R2, R2, R6
+NEXT :      SUBI    R3, R3, #48
+            ADD     R2, R2, R3
+            ADDI    R4, R4, #1
+            J       LOOP
+END :       ADDI    R12, R2, #0
+            TRAP    x00
+
+TRAPX0A :   ADDI    R28, R31, #0
+            ADDI    R30, R4, #0
+            ADDI    R4, R0, PROMPT
+            TRAP    x08
+INPUT :     TRAP    x06
+            TRAP    x07
+            SB      0(R30), R4
+            ADDI    R30, R30, #1
+            SEQI    R29, R4, #10
+            BEQZ    R29, INPUT
+            SB      -1(R30), R0
+            JR      R28

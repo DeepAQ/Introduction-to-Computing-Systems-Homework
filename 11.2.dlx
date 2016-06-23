@@ -1,0 +1,15 @@
+            .DATA
+            .TEXT
+            .GLOBAL  MAIN
+MAIN :      TRAP    x09
+            SUBI    R4, R4, #48
+            ADDI    R1, R0, #1
+            ADDI    R2, R0, #1
+LOOP :      SUBI    R4, R4, #1
+            BEQZ    R4, END
+            ADD     R3, R1, R2
+            ADDI    R2, R1, #0
+            ADDI    R1, R3, #0
+            J       LOOP
+END :       ADDI    R10, R1, #0
+            TRAP    x00

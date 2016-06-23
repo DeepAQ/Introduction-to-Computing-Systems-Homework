@@ -1,0 +1,23 @@
+            .DATA
+NUM :       .WORD   #012300
+STR :       .SPACE  32
+            .TEXT   
+            .GLOBAL  MAIN
+MAIN :      LW      R1, NUM(R0)
+            ADDI    R4, R4, #32
+            SB      STR(R4), R0
+LOOP :      ADDI    R2, R0, #0
+LOOP1 :     SUBI    R1, R1, #10
+            SLE     R3, R0, R1
+            BEQZ    R3, END1
+            ADDI    R2, R2, #1
+            J       LOOP1
+END1 :      ADDI    R1, R1, #58
+            SUBI    R4, R4, #1
+            SB      STR(R4), R1
+            BEQZ    R2, END
+            ADDI    R1, R2, #0
+            J       LOOP
+END :       ADDI    R4, R4, STR
+            TRAP    x08
+            TRAP    x00

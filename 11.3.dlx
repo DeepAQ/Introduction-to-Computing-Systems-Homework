@@ -1,0 +1,17 @@
+            .DATA
+DOC :       .ASCII  "this is a test."
+            .BYTE   x04
+            .TEXT
+            .GLOBAL  MAIN
+MAIN :      TRAP    x09
+            ADDI    R1, R0, #0
+            ADDI    R2, R0, DOC
+LOOP :      LB      R3, 0(R2)
+            SEQI    R5, R3, x04
+            BNEZ    R5, END
+            SEQ     R5, R3, R4
+            ADD     R1, R1, R5
+            ADDI    R2, R2, #1
+            J       LOOP
+END :       ADDI    R10, R1, #0
+            TRAP    x00

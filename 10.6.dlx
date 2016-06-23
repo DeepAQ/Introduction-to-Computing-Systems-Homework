@@ -1,0 +1,17 @@
+            .DATA
+            .TEXT   x40000000
+            .GLOBAL  MAIN
+		; Input:R8 R9 Output:R10
+MAIN :      ADDI    R8, R0, #10
+            ADDI    R9, R0, #5
+            ADDI    R1, R0, #0
+            ADDI    R10, R0, #0
+LOOP :      ANDI    R2, R9, #1
+            BEQZ    R2, A
+            SLL     R3, R8, R1
+            ADD     R10, R10, R3
+A :         SRLI    R9, R9, #1
+            ADDI    R1, R1, #1
+            BEQZ    R9, END
+            J       LOOP
+END :       TRAP    x00

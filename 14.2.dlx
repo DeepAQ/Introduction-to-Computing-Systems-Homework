@@ -1,0 +1,25 @@
+            .DATA
+DOC :       .ASCII  "this is a Test z."
+            .BYTE   x04
+            .TEXT
+            .GLOBAL  MAIN
+MAIN :      ADDI    R4, R0, DOC
+            TRAP    x08
+            ADDI    R1, R0, DOC
+LOOP :      LB      R2, 0(R1)
+            SEQI    R3, R2, x04
+            BNEZ    R3, END
+            JAL     TOUPPER
+            SB      0(R1), R2
+            ADDI    R1, R1, #1
+            J       LOOP
+TOUPPER :   ADDI    R4, R0, #97
+            SLE     R5, R4, R2
+            SLEI    R6, R2, #122
+            AND     R5, R5, R6
+            BEQZ    R5, NOTLOWER
+            SUBI    R2, R2, #32
+NOTLOWER :  JR      R31
+END :       ADDI    R4, R0, DOC
+            TRAP    x08
+            TRAP    x00
